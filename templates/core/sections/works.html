@@ -1,0 +1,66 @@
+{% if works %}
+<section class="works" id="works">
+  <div class="og-container">
+
+    <header class="works__head">
+      <div class="works__titles">
+        {% if works.eyebrow %}
+        <p class="works__eyebrow reveal">{{ works.eyebrow }}</p>
+        {% endif %}
+        <h2 class="works__title reveal" data-delay="100">{{ works.heading }}</h2>
+        <span class="works__line reveal-zoom" data-delay="250"></span>
+      </div>
+
+      {% if work_categories %}
+      <ul class="works__filters reveal" data-delay="200">
+        <li><button type="button" class="works__filter is-active" data-filter="all">{{ works.all_label }}</button></li>
+        {% for cat in work_categories %}
+        <li><button type="button" class="works__filter" data-filter="cat-{{ cat.id }}">{{ cat.name }}</button></li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </header>
+
+    <div class="works__grid" id="worksGrid">
+      {% for p in projects %}
+      <article class="work-card {% if forloop.first %}is-large reveal-left{% elif forloop.counter < 4 %}reveal-right{% else %}reveal{% endif %}"
+               data-cat="cat-{{ p.category_id }}"
+               data-delay="{% cycle '0' '150' '300' %}"
+               {% if p.video_url %}data-video="{{ p.video_url }}" tabindex="0" role="button" aria-label="Play {{ p.title }}"{% endif %}>
+        <div class="work-card__inner">
+
+          <img class="work-card__img" src="{{ p.image.url }}" alt="{{ p.title }}" loading="lazy">
+          <span class="work-card__shade"></span>
+          <span class="work-card__tint"></span>
+
+          {% if p.video_url %}
+          <span class="work-card__play"><i class='bx bx-play'></i></span>
+          {% endif %}
+
+          <div class="work-card__body">
+            <span class="work-card__cat">{{ p.category.name }}</span>
+            <h3 class="work-card__title">{{ p.title }}</h3>
+            <span class="work-card__rule"></span>
+          </div>
+
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% if works.note %}
+    <p class="works__note reveal">{{ works.note }}</p>
+    {% endif %}
+
+  </div>
+
+  <!-- Video popup -->
+  <div class="vmodal" id="videoModal" aria-hidden="true">
+    <div class="vmodal__backdrop" data-close></div>
+    <div class="vmodal__box">
+      <button type="button" class="vmodal__close" data-close aria-label="Close video"><i class='bx bx-x'></i></button>
+      <div class="vmodal__frame" id="videoFrame"></div>
+    </div>
+  </div>
+</section>
+{% endif %}

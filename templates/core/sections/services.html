@@ -1,0 +1,40 @@
+{% if services %}
+<section class="services" id="services">
+  <div class="og-container">
+
+    <header class="services__head">
+      {% if services.eyebrow %}
+      <p class="services__eyebrow reveal">{{ services.eyebrow }}</p>
+      {% endif %}
+      <h2 class="services__title reveal" data-delay="100">{{ services.heading }}</h2>
+      <span class="services__line reveal-zoom" data-delay="250"></span>
+    </header>
+
+    <div class="services__grid">
+      {% for card in service_cards %}
+      <article class="svc-card {% cycle 'reveal-left' 'reveal' 'reveal-right' %}" data-delay="{% cycle '0' '150' '300' %}">
+        <div class="svc-card__inner">
+
+          <img class="svc-card__img" src="{{ card.image.url }}" alt="{{ card.title }}" loading="lazy">
+          <span class="svc-card__shade"></span>
+
+          <svg class="svc-card__frame" viewBox="0 0 100 125" preserveAspectRatio="none" aria-hidden="true">
+            <polygon points="7.9,2.4 97.6,2.4 97.6,122.6 2.4,122.6 2.4,7.9"></polygon>
+          </svg>
+
+          <span class="svc-card__num">{{ card.order|stringformat:"02d" }}</span>
+
+          <div class="svc-card__panel">
+            <h3>{{ card.title }}</h3>
+            <p>{{ card.description }}</p>
+            <span class="svc-card__rule"></span>
+          </div>
+
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endif %}

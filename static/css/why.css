@@ -1,0 +1,202 @@
+/* Figma has a 47px gap between the Upcoming card and this image */
+section.upcoming { padding-bottom: 0; }
+
+.why {
+  padding: 3.1rem 0 0;
+  background: #fff;
+  overflow: hidden;
+}
+.why__inner {
+  display: grid;
+  grid-template-columns: 40rem 1fr;
+  align-items: center;
+  gap: 4rem;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 9rem 0 5rem;
+}
+
+/* ---------- Scroll animations (moderate speed) ---------- */
+.why .reveal,
+.why .reveal-right {
+  opacity: 0;
+  transition: opacity 1.4s var(--og-ease), transform 1.4s var(--og-ease);
+  will-change: transform, opacity;
+}
+.why .reveal       { transform: translateY(2.2rem); }
+.why .reveal-right { transform: translateX(3rem); }
+.why .reveal-line  {
+  display: block;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--og-ease);
+}
+.why .reveal.is-visible,
+.why .reveal-right.is-visible,
+.why .reveal-line.is-visible { opacity: 1; transform: none; }
+
+/* ---------- Image (wipes in from the left, then settles) ---------- */
+/* the outer box is what the scroll script watches, so it is never clipped */
+.why .why__figure {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
+.why__media {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 607 / 817;
+  background: #e9ddd5;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.8s var(--og-ease);
+}
+.why__figure.is-visible .why__media { clip-path: inset(0 0 0 0); }
+
+.why__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.18);
+  transition: transform 2.4s var(--og-ease);
+}
+.why__figure.is-visible .why__media img { transform: scale(1); }
+.why__figure.is-visible .why__media:hover img { transform: scale(1.06); }
+
+.why__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(105deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.22) 50%, rgba(255,255,255,0) 60%);
+  transform: translateX(-120%);
+  transition: transform 1.8s var(--og-ease);
+}
+.why__media:hover::after { transform: translateX(120%); }
+
+/* ---------- Text ---------- */
+.why__eyebrow {
+  margin: 0 0 .9rem;
+  font-family: 'Jost', 'Manrope', sans-serif;
+  font-size: .7rem;
+  font-weight: 500;
+  letter-spacing: .26em;
+  text-transform: uppercase;
+  color: var(--og-maroon);
+}
+.why__title {
+  margin: 0;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.3rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--og-maroon);
+}
+.why__line {
+  width: 3.9rem;
+  height: 1px;
+  margin: 1.2rem 0 3.1rem;
+  background: #2b1d20;
+}
+
+/* ---------- List ---------- */
+.why__list { margin: 0; padding: 0; list-style: none; }
+
+.why-item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.3rem 1fr;
+  padding: 1.65rem 0 1.6rem;
+}
+/* divider on top of each point, grows from the left */
+.why-item::before,
+.why-item:last-child::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: rgba(141, 34, 54, .3);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1.6s var(--og-ease) .3s, background .7s var(--og-ease);
+}
+.why-item::before { top: 0; }
+.why-item:last-child::after { bottom: 0; }
+.why-item.is-visible::before,
+.why-item.is-visible:last-child::after { transform: scaleX(1); }
+.why-item:hover::before { background: var(--og-maroon); }
+
+.why-item__num {
+  align-self: start;
+  margin-top: .3rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: .9rem;
+  font-weight: 500;
+  font-variant-numeric: oldstyle-nums;
+  letter-spacing: .05em;
+  color: var(--og-maroon);
+  transition: color .7s var(--og-ease), transform .8s var(--og-ease);
+}
+.why-item:hover .why-item__num { color: #d9a206; transform: scale(1.25); }
+
+.why-item__body { transition: transform .8s var(--og-ease); }
+.why-item:hover .why-item__body { transform: translateX(.55rem); }
+
+.why-item__title {
+  margin: 0 0 .5rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.65rem;
+  font-weight: 500;
+  line-height: 1.15;
+  color: var(--og-maroon);
+}
+.why-item__title span { position: relative; display: inline-block; }
+.why-item__title span::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -.2rem;
+  width: 100%;
+  height: 2px;
+  background: var(--og-gold);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .8s var(--og-ease);
+}
+.why-item:hover .why-item__title span::after { transform: scaleX(1); transform-origin: left; }
+
+.why-item__text {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  font-size: .88rem;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #1d1517;
+}
+
+/* ---------- Tablet: two columns, smaller type ---------- */
+@media (max-width: 1199.98px) {
+  .why { padding-top: 2.5rem; }
+  .why__inner { grid-template-columns: 1fr 1fr; gap: 2.5rem; padding: 0 2rem; }
+  .why__title { font-size: 2.6rem; }
+  .why__line { margin-bottom: 2.2rem; }
+  .why-item__title { font-size: 1.4rem; }
+  .why-item { padding: 1.3rem 0 1.25rem; }
+}
+/* ---------- Mobile: stacked ---------- */
+@media (max-width: 767.98px) {
+  .why { padding-bottom: 3rem; }
+  .why__inner { grid-template-columns: 1fr; gap: 2.4rem; padding: 0 1.25rem; }
+  .why__figure { max-width: 30rem; width: 100%; margin: 0 auto; }
+  .why__media { aspect-ratio: 4 / 5; }
+  .why__title { font-size: 2.3rem; }
+  .why .reveal-right { transform: translateY(2rem); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .why .reveal, .why .reveal-right { opacity: 1; transform: none; transition: none; }
+  .why .reveal-line, .why-item::before, .why-item:last-child::after { transform: none; transition: none; }
+  .why__media { clip-path: none; transition: none; }
+  .why__media img { transform: none; transition: none; }
+}

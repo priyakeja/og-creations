@@ -1,0 +1,28 @@
+{% if process %}
+<section class="process" id="process">
+  <div class="og-container">
+
+    <header class="process__head">
+      {% if process.eyebrow %}
+      <p class="process__eyebrow reveal">{{ process.eyebrow }}</p>
+      {% endif %}
+      <h2 class="process__title reveal" data-delay="100">{{ process.heading }}</h2>
+      <span class="process__line reveal-zoom" data-delay="250"></span>
+    </header>
+
+    <div class="process__grid">
+      {% for step in process_steps %}
+      <article class="step reveal" style="--i: {{ forloop.counter0 }}" data-delay="{% widthratio forloop.counter0 1 150 %}">
+        <div class="step__card">
+          <span class="step__icon"><i class="{{ step.icon }}"></i></span>
+          <span class="step__num">{{ forloop.counter|stringformat:"02d" }}</span>
+          <h3 class="step__title">{{ step.title }}</h3>
+          <p class="step__text">{{ step.description }}</p>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+  </div>
+</section>
+{% endif %}

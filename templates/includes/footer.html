@@ -1,0 +1,91 @@
+{% if footer %}
+<footer class="og-footer" id="footer">
+  <div class="og-footer__grid">
+
+    <!-- Brand -->
+    <div class="of-brand reveal">
+      <a class="of-brand__link" href="{% url 'home' %}">
+        {% if footer.logo %}
+          <img class="of-brand__logo" src="{{ footer.logo.url }}" alt="{{ footer.brand_name }}">
+        {% elif site.logo %}
+          <img class="of-brand__logo" src="{{ site.logo.url }}" alt="{{ footer.brand_name }}">
+        {% endif %}
+        <span class="of-brand__text">
+          <span class="of-brand__name">{{ footer.brand_name }}</span>
+          {% if footer.brand_tagline %}<span class="of-brand__tag">{{ footer.brand_tagline }}</span>{% endif %}
+        </span>
+      </a>
+
+      {% if footer.description %}<p class="of-desc">{{ footer.description }}</p>{% endif %}
+
+      {% if footer_socials %}
+      {% if footer.follow_label %}<p class="of-follow">{{ footer.follow_label }}</p>{% endif %}
+      <ul class="of-social">
+        {% for s in footer_socials %}
+        {% widthratio forloop.counter0 1 120 as dd %}
+        <li class="reveal" data-delay="{{ dd|add:500 }}">
+          <a href="{{ s.url }}" target="_blank" rel="noopener" aria-label="{{ s.name }}" title="{{ s.name }}">
+            <i class="{{ s.icon }}"></i>
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+      {% endif %}
+    </div>
+
+    <!-- Navigate -->
+    {% if footer_links %}
+    <div class="of-col reveal" data-delay="150">
+      <h4 class="of-col__title">{{ footer.navigate_title }}</h4>
+      <ul class="of-links">
+        {% for l in footer_links %}
+        <li><a href="{{ l.link }}"><span>{{ l.title }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Services -->
+    {% if footer_services %}
+    <div class="of-col reveal" data-delay="300">
+      <h4 class="of-col__title">{{ footer.services_title }}</h4>
+      <ul class="of-links">
+        {% for s in footer_services %}
+        <li><a href="{{ s.link }}"><span>{{ s.title }}</span></a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <!-- Contact -->
+    <div class="of-col reveal" data-delay="450">
+      <h4 class="of-col__title">{{ footer.contact_title }}</h4>
+      <ul class="of-links of-links--contact">
+        {% if footer.show_phone %}
+        <li><a href="{{ footer.tel_href }}"><span>{{ footer.show_phone }}</span></a></li>
+        {% endif %}
+        {% if footer.show_email %}
+        <li>
+          <a href="{{ footer.mailto_href }}"
+             data-gmail="https://mail.google.com/mail/?view=cm&fs=1&to={{ footer.show_email|urlencode }}">
+            <span>{{ footer.show_email }}</span>
+          </a>
+        </li>
+        {% endif %}
+        {% if footer.show_address %}
+        <li class="of-address">
+          <a href="{{ footer.map_url }}" target="_blank" rel="noopener"><span>{{ footer.show_address }}</span></a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="og-footer__bottom">
+    <div class="og-footer__bottom-inner reveal" data-delay="300">
+      <p>&copy; {% now "Y" %} {{ footer.copyright_text }}</p>
+    </div>
+  </div>
+</footer>
+{% endif %}

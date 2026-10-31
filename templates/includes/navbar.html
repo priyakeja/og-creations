@@ -1,0 +1,33 @@
+<header id="og-navbar" class="og-navbar">
+  <div class="og-container og-navbar__inner">
+
+    <a class="og-brand" href="{% url 'home' %}">
+      {% if site.logo %}
+        <img src="{{ site.logo.url }}" alt="{{ site.site_name }}" class="og-brand__logo">
+      {% endif %}
+      <span class="og-brand__text">
+        <span class="og-brand__name">{{ site.site_name|default:"OG Creations" }}</span>
+        {% if site.tagline %}<span class="og-brand__tag">{{ site.tagline }}</span>{% endif %}
+      </span>
+    </a>
+
+    <button class="og-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#ogNav" aria-controls="ogNav" aria-expanded="false" aria-label="Toggle navigation">
+      <i class='bx bx-menu'></i>
+    </button>
+
+    <div class="collapse og-collapse" id="ogNav">
+      <ul class="og-menu og-nav">
+        {% for item in nav_items %}
+        <li><a class="nav-link" href="{{ item.link }}">{{ item.title }}</a></li>
+        {% endfor %}
+      </ul>
+
+      {% if site.nav_button_text %}
+      <a href="{{ site.nav_button_link }}" class="og-btn og-btn--primary">
+        {{ site.nav_button_text }} <i class='bx bx-right-arrow-alt'></i>
+      </a>
+      {% endif %}
+    </div>
+
+  </div>
+</header>

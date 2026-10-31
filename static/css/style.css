@@ -1,0 +1,226 @@
+:root {
+  --og-bg: #FAF6F2;
+  --og-maroon: #8D2236;
+  --og-gold: #FBBF24;
+  --og-cream: #FAF5F0;
+  --og-text: #3b2a2e;
+  --og-radius: 14px;
+  --og-shadow: 0 10px 30px rgba(141, 34, 54, 0.12);
+  --og-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--og-bg);
+  color: var(--og-text);
+  font-family: 'Manrope', sans-serif;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5, h6, .font-heading {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--og-maroon);
+  font-weight: 700;
+}
+
+a { text-decoration: none; transition: color .3s var(--og-ease); }
+
+::selection { background: var(--og-maroon); color: #fff; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--og-cream); }
+::-webkit-scrollbar-thumb { background: var(--og-maroon); border-radius: 10px; }
+
+/* Scroll progress bar */
+#scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px; width: 0;
+  background: linear-gradient(90deg, var(--og-maroon), var(--og-gold));
+  z-index: 2000;
+}
+
+/* Buttons */
+.btn-og {
+  background: var(--og-maroon);
+  color: #fff;
+  border: 2px solid var(--og-maroon);
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-weight: 600;
+  display: inline-flex; align-items: center; gap: 8px;
+  transition: all .35s var(--og-ease);
+}
+.btn-og:hover {
+  background: var(--og-gold);
+  border-color: var(--og-gold);
+  color: var(--og-maroon);
+  transform: translateY(-3px);
+  box-shadow: var(--og-shadow);
+}
+.btn-og-outline {
+  background: transparent;
+  color: var(--og-maroon);
+}
+.btn-og-outline:hover { background: var(--og-maroon); border-color: var(--og-maroon); color: #fff; }
+
+/* Section helpers */
+.section-padding { padding: 90px 0; }
+.section-title { font-size: clamp(2rem, 4vw, 3rem); }
+.section-subtitle {
+  color: var(--og-gold);
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-size: .85rem;
+}
+
+/* Hover card */
+.hover-lift { transition: transform .4s var(--og-ease), box-shadow .4s var(--og-ease); }
+.hover-lift:hover { transform: translateY(-8px); box-shadow: var(--og-shadow); }
+
+/* Scroll reveal animations */
+.reveal, .reveal-left, .reveal-right, .reveal-zoom {
+  opacity: 0;
+  transition: opacity .9s var(--og-ease), transform .9s var(--og-ease);
+  will-change: transform, opacity;
+}
+.reveal       { transform: translateY(50px); }
+.reveal-left  { transform: translateX(-60px); }
+.reveal-right { transform: translateX(60px); }
+.reveal-zoom  { transform: scale(.85); }
+
+.reveal.is-visible,
+.reveal-left.is-visible,
+.reveal-right.is-visible,
+.reveal-zoom.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal, .reveal-left, .reveal-right, .reveal-zoom {
+    opacity: 1; transform: none; transition: none;
+  }
+}
+/* ===== Shared: scaling, container, buttons, floating actions ===== */
+
+/* Same behaviour as Figma "scale down to fit width" (1440px design) */
+html { font-size: 16px; }
+@media (min-width: 1200px) {
+  html { font-size: min(16px, 1.1111vw); }
+}
+
+.og-container {
+  width: 100%;
+  max-width: 90rem;
+  margin: 0 auto;
+  padding: 0 3.2rem;
+}
+@media (max-width: 767.98px) { .og-container { padding: 0 1.25rem; } }
+
+section[id] { scroll-margin-top: 4.5rem; }
+
+/* Buttons */
+.og-btn {
+  --cut: .75rem;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .65rem;
+  min-height: 3rem;
+  padding: 0 2rem;
+  border: 0;
+  cursor: pointer;
+  font-family: 'Manrope', sans-serif;
+  font-size: .78rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .25em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--cut)), calc(100% - var(--cut)) 100%, 0 100%);
+  transition: color .4s var(--og-ease), transform .4s var(--og-ease);
+}
+.og-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translateX(-101%);
+  transition: transform .45s var(--og-ease);
+}
+.og-btn i { font-size: 1.2rem; transition: transform .35s var(--og-ease); }
+.og-btn:hover { transform: translateY(-3px); }
+.og-btn:hover::before { transform: none; }
+.og-btn:hover i { transform: translateX(6px); }
+
+.og-btn--primary { background: var(--og-maroon); color: #fff; }
+.og-btn--primary::before { background: var(--og-gold); }
+.og-btn--primary:hover { color: var(--og-maroon); }
+
+/* Outline button with the cut corner, like Figma */
+.og-btn--outline {
+  padding: 0 calc(2.1rem - 1px);
+  border: 1px solid rgba(141, 34, 54, .45);
+  background: rgba(255, 255, 255, .25);
+  color: var(--og-maroon);
+}
+.og-btn--outline::before { background: var(--og-maroon); }
+.og-btn--outline::after {
+  content: '';
+  position: absolute;
+  right: calc(var(--cut) / 2 - 1px + .5px);
+  bottom: calc(var(--cut) / 2 - 1px + .5px);
+  width: calc(var(--cut) * 1.4142);
+  height: 1px;
+  background: rgba(141, 34, 54, .45);
+  transform: translate(50%, 50%) rotate(-45deg);
+}
+.og-btn--outline:hover { color: #fff; }
+
+/* Floating call / WhatsApp buttons */
+.floating-actions {
+  position: fixed;
+  right: 1.1rem;
+  bottom: 1.5rem;
+  z-index: 1500;
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+}
+.floating-actions a {
+  position: relative;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--og-maroon);
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .18);
+  transition: transform .35s var(--og-ease), background .35s, color .35s;
+}
+.floating-actions a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid var(--og-maroon);
+  opacity: 0;
+  animation: ogPulse 2.4s infinite;
+}
+.floating-actions a:nth-child(2)::after { animation-delay: 1.2s; }
+.floating-actions a:hover { background: var(--og-maroon); color: #fff; transform: scale(1.1); }
+@keyframes ogPulse {
+  0%   { transform: scale(1);   opacity: .55; }
+  100% { transform: scale(1.7); opacity: 0; }
+}
+@media (max-width: 575.98px) {
+  .floating-actions { right: .8rem; bottom: 1rem; }
+  .floating-actions a { width: 2.9rem; height: 2.9rem; font-size: 1.5rem; }
+}

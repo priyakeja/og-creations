@@ -1,0 +1,84 @@
+{% if upcoming %}
+<section class="upcoming" id="upcoming">
+  <div class="og-container">
+
+    <header class="upcoming__head">
+      <div class="upcoming__titlerow reveal">
+        <h2 class="upcoming__title">{{ upcoming.heading }}</h2>
+        <span class="upcoming__line"></span>
+      </div>
+      {% if upcoming.tagline %}
+      <p class="upcoming__tagline reveal" data-delay="150">
+        {% for part in upcoming.tagline_parts %}{% if not forloop.first %}<i class="upcoming__sep">·</i>{% endif %}<span>{{ part }}</span>{% endfor %}
+      </p>
+      {% endif %}
+    </header>
+
+    <div class="upcoming__list">
+      {% for u in upcoming_projects %}
+      <article class="up-card reveal" data-delay="{% if forloop.first %}200{% else %}0{% endif %}">
+        <div class="up-card__inner">
+
+          <div class="up-card__body">
+
+            <div class="up-card__info">
+              <div>
+                {% if u.label %}<p class="up-card__label up-fade" style="--b:.5s">{{ u.label }}</p>{% endif %}
+                <h3 class="up-card__title up-fade" style="--b:.65s">{{ u.title }}</h3>
+                {% if u.tagline %}<p class="up-card__tag up-fade" style="--b:.8s">{{ u.tagline|linebreaksbr }}</p>{% endif %}
+              </div>
+
+              {% if u.release_date or u.release_status %}
+              <div class="up-card__date up-fade" style="--b:1.3s">
+                <span class="up-card__cal"><i class='bx bx-calendar'></i></span>
+                {% if u.release_date %}<span>{{ u.release_date }}</span>{% endif %}
+                {% if u.release_date and u.release_status %}<i class="up-card__bar"></i>{% endif %}
+                {% if u.release_status %}<span>{{ u.release_status }}</span>{% endif %}
+              </div>
+              {% endif %}
+            </div>
+
+            <div class="up-card__cast">
+              {% for g in u.cast.all %}
+              <div class="cast up-fade" style="--b:.7s; --i:{{ forloop.counter0 }}">
+                <p class="cast__label">{{ g.label }}</p>
+                <ul class="cast__names">
+                  {% for n in g.names_list %}<li>{{ n }}</li>{% endfor %}
+                </ul>
+              </div>
+              {% endfor %}
+            </div>
+
+          </div>
+
+          <div class="up-card__media">
+            <img src="{{ u.image.url }}" alt="{{ u.title }}" loading="lazy">
+          </div>
+
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+  </div>
+
+  <script>
+    /* hides the divider bar when a cast name wraps to a new line */
+    (function () {
+      function mark() {
+        document.querySelectorAll('.cast__names').forEach(function (ul) {
+          var prev = null;
+          ul.querySelectorAll('li').forEach(function (li) {
+            li.classList.remove('is-line-start');
+            if (!prev || li.offsetTop > prev.offsetTop + 2) li.classList.add('is-line-start');
+            prev = li;
+          });
+        });
+      }
+      document.addEventListener('DOMContentLoaded', mark);
+      window.addEventListener('load', mark);
+      window.addEventListener('resize', mark);
+    })();
+  </script>
+</section>
+{% endif %}

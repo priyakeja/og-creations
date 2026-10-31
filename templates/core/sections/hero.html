@@ -1,0 +1,51 @@
+{% if hero %}
+<section class="hero" id="home">
+
+  <div class="hero__bg" data-parallax>
+    {% if hero.background_image %}
+      <img src="{{ hero.background_image.url }}" alt="{{ hero.heading_before }} {{ hero.heading_italic }} {{ hero.heading_after }}">
+    {% endif %}
+  </div>
+  <div class="hero__overlay"></div>
+
+  <div class="og-container hero__inner" data-hero-content>
+    <div class="hero__content">
+
+      {% if hero.eyebrow %}
+      <p class="hero__eyebrow hero-anim" style="--d:.1s">{{ hero.eyebrow }}</p>
+      {% endif %}
+
+      <h1 class="hero__title">
+        <span class="line"><span class="line__inner">{{ hero.heading_before }} <em>{{ hero.heading_italic }}</em></span></span>
+        <span class="line"><span class="line__inner">{{ hero.heading_after }}</span></span>
+      </h1>
+
+      <p class="hero__text hero-anim" style="--d:.8s">{{ hero.description }}</p>
+
+      <div class="hero__buttons hero-anim" style="--d:1s">
+        {% if hero.primary_button_text %}
+        <a href="{{ hero.primary_button_link }}" class="og-btn og-btn--primary">
+          {{ hero.primary_button_text }} <i class='bx bx-right-arrow-alt'></i>
+        </a>
+        {% endif %}
+        {% if hero.secondary_button_text %}
+        <a href="{{ hero.secondary_button_link }}" class="og-btn og-btn--outline">
+          {{ hero.secondary_button_text }}
+        </a>
+        {% endif %}
+      </div>
+
+      <ul class="hero__tags">
+        {% for tag in hero.tags.all %}
+        <li class="hero-anim" style="--d:{{ forloop.counter|add:10 }}0ms">{{ tag.title }}</li>
+        {% endfor %}
+      </ul>
+
+    </div>
+  </div>
+</section>
+{% else %}
+<section class="section-padding text-center" id="home" style="padding-top:180px;">
+  <p>Open <strong>Admin → Hero Section</strong> and add the hero content.</p>
+</section>
+{% endif %}

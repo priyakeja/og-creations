@@ -1,0 +1,73 @@
+main { background: #fff; }
+
+.marquee {
+  position: relative;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  height: 3.8rem;
+  display: flex;
+  align-items: center;
+  background: #f3e8e1;
+  border-top: 1px solid rgba(251, 191, 36, .25);
+  border-bottom: 1px solid rgba(251, 191, 36, .35);
+}
+
+.marquee__track {
+  display: flex;
+  width: max-content;
+  animation: marqueeMove var(--speed, 35s) linear infinite;
+  will-change: transform;
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+.marquee__group { display: flex; flex-shrink: 0; align-items: center; }
+
+.marquee__item {
+  display: flex;
+  align-items: center;
+  gap: 2.3rem;
+  padding-right: 2.3rem;
+  cursor: default;
+}
+
+.marquee__text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--og-maroon);
+  transition: color .35s var(--og-ease), transform .35s var(--og-ease);
+}
+
+/* Square diamond */
+.marquee__dot {
+  display: block;
+  flex-shrink: 0;
+  width: .5rem;
+  height: .5rem;
+  font-size: 0;
+  background: var(--og-maroon);
+  transform: rotate(45deg);
+  transition: transform .5s var(--og-ease), background .35s var(--og-ease);
+}
+
+/* Hover: word turns dark and lifts, diamond turns gold and spins */
+.marquee__item:hover .marquee__text { color: #1d1517; transform: translateY(-2px); }
+.marquee__item:hover .marquee__dot { background: var(--og-gold); transform: rotate(225deg) scale(1.4); }
+
+/* Moves exactly one group (1 of 6 copies), so the loop is seamless */
+@keyframes marqueeMove {
+  from { transform: translateX(0); }
+  to   { transform: translateX(calc(-100% / 6)); }
+}
+
+@media (max-width: 767.98px) {
+  .marquee { height: 3.2rem; }
+  .marquee__text { font-size: .95rem; letter-spacing: .25em; }
+  .marquee__item { gap: 1.6rem; padding-right: 1.6rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .marquee__track { animation: none; }
+}

@@ -1,0 +1,8 @@
+<div class="floating-actions">
+  {% if site.phone_number %}
+  <a href="tel:{{ site.phone_number }}" aria-label="Call us"><i class="{{ site.phone_icon }}"></i></a>
+  {% endif %}
+  {% if site.whatsapp_number %}
+  <a href="https://wa.me/{{ site.whatsapp_number }}?text={{ site.whatsapp_message|urlencode }}" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="{{ site.whatsapp_icon }}"></i></a>
+  {% endif %}
+</div>

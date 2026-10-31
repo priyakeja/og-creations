@@ -1,0 +1,156 @@
+{% if contact %}
+<section class="contact" id="contact"{% if contact.background_image %} style="background-image: url('{{ contact.background_image.url }}');"{% endif %}>
+  <div class="contact__inner">
+
+    <!-- ============ LEFT: heading, details, map ============ -->
+    <div class="contact__info">
+      {% if contact.eyebrow %}
+      <p class="contact__eyebrow reveal">{{ contact.eyebrow }}</p>
+      {% endif %}
+      <h2 class="contact__title reveal" data-delay="100">{{ contact.heading }}</h2>
+      {% if contact.subheading %}
+      <p class="contact__sub reveal" data-delay="200">{{ contact.subheading }}</p>
+      {% endif %}
+
+      <ul class="contact__list">
+        {% if contact.phone_display %}
+        <li class="reveal-left" data-delay="300">
+          <a class="c-item" href="{{ contact.tel_href }}">
+            <i class="c-item__icon {{ contact.phone_icon }}"></i>
+            <span class="c-item__body">
+              <span class="c-item__label">{{ contact.phone_label }}</span>
+              <span class="c-item__value"><span>{{ contact.phone_display }}</span></span>
+            </span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% if contact.email %}
+        <li class="reveal-left" data-delay="400">
+            <a class="c-item" href="{{ contact.mailto_href }}"
+             data-gmail="https://mail.google.com/mail/?view=cm&fs=1&to={{ contact.email|urlencode }}">
+            <i class="c-item__icon {{ contact.email_icon }}"></i>
+            <span class="c-item__body">
+              <span class="c-item__label">{{ contact.email_label }}</span>
+              <span class="c-item__value c-item__value--email"><span>{{ contact.email }}</span></span>
+            </span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% if contact.address %}
+        <li class="reveal-left" data-delay="500">
+          <a class="c-item" href="{{ contact.map_url }}" target="_blank" rel="noopener">
+            <i class="c-item__icon {{ contact.address_icon }}"></i>
+            <span class="c-item__body">
+              <span class="c-item__label">{{ contact.address_label }}</span>
+              <span class="c-item__value c-item__value--address"><span>{{ contact.address }}</span></span>
+            </span>
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+
+      <div class="contact__mapwrap reveal-zoom" data-delay="600">
+        <div class="contact__map">
+          <iframe src="{{ contact.embed_src }}" title="{{ contact.address_label }} map" loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+          <a class="contact__dir" href="{{ contact.map_url }}" target="_blank" rel="noopener" aria-label="Get directions">
+            <i class='bx bxs-directions'></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ RIGHT: form card ============ -->
+    <div class="contact__card reveal-right" data-delay="200">
+
+      <form class="cf" id="contactForm" action="{% url 'contact_submit' %}" method="post" novalidate>
+        {% csrf_token %}
+        <input type="text" name="website" class="cf-hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <div class="cf__grid">
+
+          <div class="cf-field reveal" data-field="name" data-delay="300">
+            <label for="cf-name">{{ contact.f_name_label }} <b>*</b></label>
+            <div class="cf-control">
+              <input id="cf-name" name="name" type="text" required maxlength="60"
+                     autocomplete="name" placeholder="{{ contact.f_name_placeholder }}">
+            </div>
+            <span class="cf-error" role="alert"></span>
+          </div>
+
+          <div class="cf-field reveal" data-field="phone" data-delay="380">
+            <label for="cf-phone">{{ contact.f_phone_label }} <b>*</b></label>
+            <div class="cf-control cf-phone">
+              <span class="cf-prefix">+91</span>
+              <input id="cf-phone" name="phone" type="tel" inputmode="numeric" required maxlength="14"
+                     autocomplete="tel-national" placeholder="{{ contact.f_phone_placeholder }}">
+            </div>
+            <span class="cf-error" role="alert"></span>
+          </div>
+
+          <div class="cf-field reveal" data-field="email" data-delay="460">
+            <label for="cf-email">{{ contact.f_email_label }} <b>*</b></label>
+            <div class="cf-control">
+              <input id="cf-email" name="email" type="email" required maxlength="120"
+                     autocomplete="email" placeholder="{{ contact.f_email_placeholder }}">
+            </div>
+            <span class="cf-error" role="alert"></span>
+          </div>
+
+          <div class="cf-field reveal" data-field="service" data-delay="540">
+            <label for="cf-service">{{ contact.f_service_label }} <b>*</b></label>
+            <div class="cf-control cf-select">
+              <select id="cf-service" name="service" required>
+                <option value="">{{ contact.f_service_placeholder }}</option>
+                {% for s in contact_services %}
+                <option value="{{ s.name }}">{{ s.name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <span class="cf-error" role="alert"></span>
+          </div>
+
+          <div class="cf-field cf-field--full reveal" data-field="details" data-delay="620">
+            <label for="cf-details">{{ contact.f_details_label }} <b>*</b></label>
+            <div class="cf-control">
+              <textarea id="cf-details" name="details" required maxlength="2000"
+                        placeholder="{{ contact.f_details_placeholder }}"></textarea>
+            </div>
+            <span class="cf-error" role="alert"></span>
+          </div>
+
+        </div>
+
+        <p class="cf-alert" id="cfAlert" role="alert" hidden></p>
+
+        <div class="cf__actions reveal" data-delay="700">
+          <button type="submit" class="og-btn og-btn--primary cf-submit">
+            <span class="cf-submit__text">{{ contact.button_text }}</span>
+            <i class='bx bx-right-arrow-alt cf-arrow'></i>
+            <i class='bx bx-loader-alt bx-spin cf-spin'></i>
+          </button>
+        </div>
+      </form>
+
+      <!-- Thank you panel (shown after a successful submit) -->
+      <div class="cf-success" id="cfSuccess" hidden aria-live="polite">
+        <svg class="cf-tick" viewBox="0 0 52 52" aria-hidden="true">
+          <circle class="cf-tick__circle" cx="26" cy="26" r="24" fill="none"/>
+          <path class="cf-tick__check" fill="none" d="M14 27l8 8 16-17"/>
+        </svg>
+        <h3 class="cf-success__title">{{ contact.success_title }}</h3>
+        <p class="cf-success__text">{{ contact.success_message }}</p>
+        <a class="cf-success__wa" id="cfWhatsapp" href="#" target="_blank" rel="noopener" hidden>
+          <i class='bx bxl-whatsapp'></i> Send on WhatsApp
+        </a>
+        <button type="button" class="og-btn og-btn--outline cf-success__again" id="cfAgain">
+          {{ contact.success_button_text }}
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endif %}

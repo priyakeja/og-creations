@@ -1,0 +1,86 @@
+{% if bts %}
+<div class="bts-wrap">
+  <section class="bts" id="behind">
+
+    <!-- decorative arcs and glow -->
+    <span class="bts__arc bts__arc--1" aria-hidden="true"></span>
+    <span class="bts__arc bts__arc--2" aria-hidden="true"></span>
+    <span class="bts__arc bts__arc--3" aria-hidden="true"></span>
+    <span class="bts__orb" aria-hidden="true"></span>
+
+    <div class="bts__wide">
+
+      <header class="bts__head reveal">
+        <div class="bts__mark">
+          <svg class="bts__reel" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="10.5"></circle>
+            <circle cx="12" cy="12" r="1.8"></circle>
+            <circle cx="12" cy="6.2" r="1.9"></circle>
+            <circle cx="12" cy="17.8" r="1.9"></circle>
+            <circle cx="6.2" cy="12" r="1.9"></circle>
+            <circle cx="17.8" cy="12" r="1.9"></circle>
+          </svg>
+          <span class="bts__line"></span>
+        </div>
+        <h2 class="bts__title"><strong>{{ bts.heading_bold }}</strong> <span>{{ bts.heading_light }}</span></h2>
+      </header>
+
+      <div class="bts__grid">
+
+        <!-- Left column -->
+        <div class="bts__col">
+          {% if bts.left_top_image %}
+          <figure class="bts__fig bts__fig--lt reveal-left">
+            <div class="bts__frame"><div class="bts__media"><img src="{{ bts.left_top_image.url }}" alt="{{ bts.left_top_caption }}" loading="lazy"></div></div>
+            {% if bts.left_top_caption %}<figcaption class="bts__cap">{{ bts.left_top_caption }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+
+          {% if bts.left_bottom_image %}
+          <figure class="bts__fig bts__fig--lb reveal-left" data-delay="150">
+            <div class="bts__frame"><div class="bts__media"><img src="{{ bts.left_bottom_image.url }}" alt="{{ bts.left_bottom_caption }}" loading="lazy"></div></div>
+            {% if bts.left_bottom_caption %}<figcaption class="bts__cap">{{ bts.left_bottom_caption }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+        </div>
+
+        <!-- Centre -->
+        <div class="bts__center">
+          {% if bts.center_image %}
+          <figure class="bts__fig bts__fig--c reveal-zoom" data-delay="200">
+            <div class="bts__frame">
+              <div class="bts__media"><img src="{{ bts.center_image.url }}" alt="{{ bts.center_title }}" loading="lazy"></div>
+              {% if bts.center_title %}
+              <div class="bts__panel">
+                <h3>{{ bts.center_title }}</h3>
+                {% if bts.center_subtitle %}<p>{{ bts.center_subtitle }}</p>{% endif %}
+              </div>
+              {% endif %}
+            </div>
+          </figure>
+          {% endif %}
+        </div>
+
+        <!-- Right column -->
+        <div class="bts__col">
+          {% if bts.right_top_image %}
+          <figure class="bts__fig bts__fig--rt reveal-right">
+            <div class="bts__frame"><div class="bts__media"><img src="{{ bts.right_top_image.url }}" alt="{{ bts.right_top_caption }}" loading="lazy"></div></div>
+            {% if bts.right_top_caption %}<figcaption class="bts__cap">{{ bts.right_top_caption }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+
+          {% if bts.right_bottom_image %}
+          <figure class="bts__fig bts__fig--rb reveal-right" data-delay="150">
+            <div class="bts__frame"><div class="bts__media"><img src="{{ bts.right_bottom_image.url }}" alt="{{ bts.right_bottom_caption }}" loading="lazy"></div></div>
+            {% if bts.right_bottom_caption %}<figcaption class="bts__cap">{{ bts.right_bottom_caption }}</figcaption>{% endif %}
+          </figure>
+          {% endif %}
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+</div>
+{% endif %}

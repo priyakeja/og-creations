@@ -1,0 +1,16 @@
+{% if marquee and marquee.items.all %}
+<section class="marquee" aria-label="What we do">
+  <div class="marquee__track" style="--speed: {{ marquee.speed }}s;">
+    {% for copy in "123456" %}
+    <div class="marquee__group"{% if not forloop.first %} aria-hidden="true"{% endif %}>
+      {% for item in marquee.items.all %}
+      <span class="marquee__item">
+        <span class="marquee__text">{{ item.title }}</span>
+        <i class="marquee__dot">◆</i>
+      </span>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
